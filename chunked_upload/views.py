@@ -59,7 +59,7 @@ class ChunkedUploadBaseView(View):
 
     def save(self, chunked_upload, request, new=False):
         """
-        Method that calls save(). Overriding may be useful is save() needs
+        Method that calls save(). Overriding may be useful if save() needs
         special args or kwargs.
         """
         chunked_upload.save()
@@ -230,11 +230,11 @@ class ChunkedUploadView(ChunkedUploadBaseView):
 
 class ChunkedUploadCompleteView(ChunkedUploadBaseView):
     """
-    Completes an chunked upload. Method `on_completion` is a placeholder to
+    Completes a chunked upload. Method `on_completion` is a placeholder to
     define what to do when upload is complete.
     """
 
-    # I wouldn't recommend to turn off the md5 check, unless is really
+    # I wouldn't recommend to turn off the md5 check, unless it's really
     # impacting your performance. Proceed at your own risk.
     do_md5_check = True
 
