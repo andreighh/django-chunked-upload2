@@ -153,8 +153,9 @@ class ChunkedUploadView(ChunkedUploadBaseView):
         found in the POST data.
         """
         chunked_upload = self.model(**attrs)
-        # file starts empty
-        chunked_upload.file.save(name="", content=ContentFile(""), save=save)
+        # file starts empty, give it a name to prevent suspicious file operation
+        # errors
+        chunked_upload.file.save(name="tmp", content=ContentFile(""), save=save)
         return chunked_upload
 
     def is_valid_chunked_upload(self, chunked_upload):
