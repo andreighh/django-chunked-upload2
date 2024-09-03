@@ -270,7 +270,7 @@ class ChunkedUploadCompleteView(ChunkedUploadBaseView):
         """
         if chunked_upload.status == COMPLETE:
             error_msg = "Upload has already been marked as complete"
-            return ChunkedUploadError(
+            raise ChunkedUploadError(
                 status=HttpStatus.HTTP_400_BAD_REQUEST, detail=error_msg
             )
 
