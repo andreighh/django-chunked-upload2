@@ -2,11 +2,15 @@ from optparse import make_option
 
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from django.utils.translation import ugettext as _
 
 from chunked_upload.settings import EXPIRATION_DELTA
 from chunked_upload.models import ChunkedUpload
 from chunked_upload.constants import UPLOADING, COMPLETE
+
+try:
+    from django.utils.translation import ugettext as _
+except ImportError:
+    from django.utils.translation import gettext_lazy as _
 
 prompt_msg = _(u'Do you want to delete {obj}?')
 

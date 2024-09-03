@@ -1,7 +1,9 @@
-from django.utils.translation import ugettext as _
+try:
+    from django.utils.translation import ugettext as _
+except ImportError:
+    from django.utils.translation import gettext_lazy as _
 
-
-class http_status:
+class HttpStatus:
     HTTP_200_OK = 200
     HTTP_400_BAD_REQUEST = 400
     HTTP_403_FORBIDDEN = 403
