@@ -12,7 +12,7 @@ try:
 except ImportError:
     from django.utils.translation import gettext_lazy as _
 
-prompt_msg = _(u'Do you want to delete {obj}?')
+prompt_msg = _("Do you want to delete {obj}?")
 
 
 class Command(BaseCommand):
@@ -20,18 +20,20 @@ class Command(BaseCommand):
     # Has to be a ChunkedUpload subclass
     model = ChunkedUpload
 
-    help = 'Deletes chunked uploads that have already expired.'
+    help = "Deletes chunked uploads that have already expired."
 
     option_list = BaseCommand.option_list + (
-        make_option('--interactive',
-                    action='store_true',
-                    dest='interactive',
-                    default=False,
-                    help='Prompt confirmation before each deletion.'),
+        make_option(
+            "--interactive",
+            action="store_true",
+            dest="interactive",
+            default=False,
+            help="Prompt confirmation before each deletion.",
+        ),
     )
 
     def handle(self, *args, **options):
-        interactive = options.get('interactive')
+        interactive = options.get("interactive")
 
         count = {UPLOADING: 0, COMPLETE: 0}
         qs = self.model.objects.all()
@@ -39,16 +41,16 @@ class Command(BaseCommand):
 
         for chunked_upload in qs:
             if interactive:
-                prompt = prompt_msg.format(obj=chunked_upload) + u' (y/n): '
+                prompt = prompt_msg.format(obj=chunked_upload) + " (y/n): "
                 answer = raw_input(prompt).lower()
-                while answer not in ('y', 'n'):
+                while answer not in ("y", "n"):
                     answer = raw_input(prompt).lower()
-                if answer == 'n':
+                if answer == "n":
                     continue
 
             count[chunked_upload.status] += 1
             # Deleting objects individually to call delete method explicitly
             chunked_upload.delete()
 
-        print('%i complete uploads were deleted.' % count[COMPLETE])
-        print('%i incomplete uploads were deleted.' % count[UPLOADING])
+        print("%i complete uploads were deleted." % count[COMPLETE])
+        print("%i incomplete uploads were deleted." % count[UPLOADING])
