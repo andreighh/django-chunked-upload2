@@ -1,6 +1,6 @@
 import logging
 
-from django.core.management.base import BaseCommand, no_translations
+from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from chunked_upload.settings import EXPIRATION_DELTA
@@ -33,7 +33,6 @@ class Command(BaseCommand):
             help="Prompt confirmation before each deletion.",
         )
 
-    @no_translations
     def handle(self, *args, **options):
         interactive = options.get("interactive")
 
